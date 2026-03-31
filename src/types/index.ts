@@ -1,36 +1,15 @@
-export interface NavLink {
-  label: string;
-  href: string;
+export type Skill = {
+  name: string
+  category: 'frontend' | 'backend' | 'tools'
+  level: 1 | 2 | 3
 }
 
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  techStack: string[];
-  liveUrl?: string;
-  repoUrl?: string;
-  image?: string;
+export type Project = {
+  id: string
+  title: string
+  description: string
+  tags: string[]
+  repo?: string
+  featured: boolean
+  year: number
 }
-
-export interface Skill {
-  name: string;
-  level: number; // 1–100
-  category: "frontend" | "backend" | "tools" | "other";
-}
-
-export interface Experience {
-  id: number;
-  role: string;
-  company: string;
-  period: string;
-  description: string[];
-  current?: boolean;
-}
-
-export interface SocialLink {
-  platform: string;
-  url: string;
-  icon: string;
-}
-

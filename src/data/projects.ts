@@ -1,31 +1,45 @@
-import type { Project } from "../types";
+import type { Project } from '@/types'
 
 export const projects: Project[] = [
   {
-    id: 1,
-    title: "Project One",
+    id: 'safeswap',
+    title: 'SafeSwap',
     description:
-      "A brief description of what this project does and the problem it solves.",
-    techStack: ["React", "TypeScript", "Tailwind CSS"],
-    liveUrl: "https://example.com",
-    repoUrl: "https://github.com/yourusername/project-one",
+      'A mobile-first escrow platform eliminating fraud in Nigerian informal online marketplaces. Buyers and sellers on Instagram and WhatsApp transact through a secure hold-and-release flow — money only moves when both parties confirm.',
+    tags: ['React Native', 'Django', 'Django REST Framework', 'Escrow', 'FinTech'],
+    repo: 'https://github.com',
+    featured: true,
+    year: 2025,
   },
   {
-    id: 2,
-    title: "Project Two",
+    id: 'portfolio',
+    title: 'Developer Portfolio',
     description:
-      "A brief description of what this project does and the problem it solves.",
-    techStack: ["Node.js", "Express", "MongoDB"],
-    liveUrl: "https://example.com",
-    repoUrl: "https://github.com/yourusername/project-two",
+      'This site. Built with React, TypeScript, Tailwind v4, Three.js, and Framer Motion. Features a custom magnetic cursor, GSAP-driven animations, and a WebGL particle scene.',
+    tags: ['React', 'TypeScript', 'Three.js', 'Framer Motion', 'GSAP'],
+    repo: 'https://github.com',
+    featured: true,
+    year: 2025,
   },
   {
-    id: 3,
-    title: "Project Three",
+    id: 'freelance-connector',
+    title: 'Freelance Connector',
     description:
-      "A brief description of what this project does and the problem it solves.",
-    techStack: ["Python", "FastAPI", "PostgreSQL"],
-    repoUrl: "https://github.com/yourusername/project-three",
+      'Early-stage startup connecting freelancers with local Nigerian businesses through smart web and social media search. First real-world product attempt — learned hard lessons about capital and market timing.',
+    tags: ['React', 'Django', 'Python', 'REST API'],
+    repo: 'https://github.com',
+    featured: false,
+    year: 2024,
   },
-];
+  {
+    id: 'business-sites',
+    title: 'Local Business Websites',
+    description:
+      'A collection of websites built for small Nigerian businesses — restaurants, retail shops, and service providers. Custom-built, responsive, and SEO-optimised for local search.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Freelance'],
+    featured: false,
+    year: 2023,
+  },
+]
 
+export const featuredProjects = projects.filter((p) => p.featured)
