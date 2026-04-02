@@ -23,8 +23,15 @@ interface CursorProviderProps {
 
 export function CursorProvider({ children }: CursorProviderProps) {
   const { cursorDotRef, cursorBlobRef, cursorTrailRef, setVariant } = useCursor()
-  const [isVisible, setIsVisible] = useState(false)
-  const [isLargeScreen, setIsLargeScreen] = useState(false)
+  const getEligible = () => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(pointer: fine)').matches
+  }
+
+  const [isVisible, setIsVisible] = useState(getEligible)
+  const [isLargeScreen, setIsLargeScreen] = useState(() => {
+    return getEligible()
+  })
   const prevBodyCursor = useRef<string | null>(null)
 
   useEffect(() => {
@@ -66,6 +73,12 @@ export function CursorProvider({ children }: CursorProviderProps) {
     return () => {
       window.removeEventListener('blur', hide)
       window.removeEventListener('focus', show)
+      // Restore the prior cursor style so we don't leave the page in an unexpected state.
+      if (prevBodyCursor.current !== null) {
+        body.style.cursor = prevBodyCursor.current
+      } else {
+        body.style.cursor = ''
+      }
     }
   }, [isLargeScreen])
 

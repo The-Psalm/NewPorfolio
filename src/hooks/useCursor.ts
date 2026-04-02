@@ -82,26 +82,27 @@ export function useCursor() {
       }
 
       // Clamp dt to avoid huge velocity spikes after tab switching / throttling.
-      const dt = Math.min(Math.max(now - lastTime, 1), 40)
+      const dt    = Math.min(Math.max(now - lastTime, 1), 40)
       const vx    = (e.clientX - lastX) / dt
       const vy    = (e.clientY - lastY) / dt
       const speed = Math.sqrt(vx * vx + vy * vy)         // px/ms
       const speedN = Math.min(speed / 1.25, 1)
       const angle = Math.atan2(vy, vx) * (180 / Math.PI) // degrees
+      const rotation = angle * (0.25 + speedN * 0.75)
 
       posRef.current = { x: e.clientX, y: e.clientY }
 
       // Velocity squish — elongate dot in direction of travel
-      const stretch = Math.min(1 + speed * 12, 3)
+      const stretch = Math.min(1 + speedN * 2.2, 3)
       const squish  = Math.max(1 / stretch, 0.35)
 
       gsap.to(dot, {
         x: e.clientX,
         y: e.clientY,
-        rotation: angle,
+        rotation,
         scaleX: stretch,
         scaleY: squish,
-        duration: 0.06,
+        duration: 0.1,
         ease: 'power2.out',
         overwrite: 'auto',
       })
@@ -111,9 +112,9 @@ export function useCursor() {
         scaleX: 1,
         scaleY: 1,
         rotation: 0,
-        duration: 0.55,
-        ease: 'elastic.out(1, 0.4)',
-        delay: 0.07,
+        duration: 0.45,
+        ease: 'elastic.out(1, 0.35)',
+        delay: 0.03,
         overwrite: 'auto',
       })
 
@@ -121,7 +122,7 @@ export function useCursor() {
       gsap.to(blob, {
         x: e.clientX,
         y: e.clientY,
-        duration: 0.55,
+        duration: 0.45,
         ease: 'power3.out',
         overwrite: 'auto',
       })
@@ -131,7 +132,7 @@ export function useCursor() {
         gsap.to(trail, {
           x: e.clientX,
           y: e.clientY,
-          duration: 0.95,
+          duration: 0.8,
           ease: 'power2.out',
           overwrite: 'auto',
           opacity: 0.14 + speedN * 0.42,
@@ -250,11 +251,10 @@ export function useCursor() {
       // Dot bounces back
       gsap.to(dot, { scale: 1, duration: 0.5, ease: 'elastic.out(1.2, 0.35)', overwrite: 'auto' })
     }
-
     resetIdle()
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mousedown', onDown)
-    window.addEventListener('mouseup',   onUp)
+    window.addEventListener('mouseup', onUp)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
