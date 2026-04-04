@@ -29,7 +29,7 @@ export function Footer() {
         borderColor:     'rgba(214,204,208,0.07)',
       }}
     >
-      <div className="container-wide px-6 md:px-12 py-12">
+      <div className="container-wide py-12">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
 
           {/* Left — branding */}
@@ -56,8 +56,8 @@ export function Footer() {
               </button>
             </MagneticWrapper>
             <p
-              className="font-sans text-xs"
-              style={{ color: 'rgba(214,204,208,0.25)', paddingLeft: '2.25rem' }}
+              className="font-sans text-xs pl-6 sm:pl-9"
+              style={{ color: 'rgba(214,204,208,0.25)' }}
             >
               {siteConfig.location}
             </p>

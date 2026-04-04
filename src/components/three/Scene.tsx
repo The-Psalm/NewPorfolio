@@ -9,8 +9,11 @@ function FloatingMesh() {
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return
-    meshRef.current.rotation.x = clock.getElapsedTime() * 0.12
-    meshRef.current.rotation.y = clock.getElapsedTime() * 0.18
+    const t = clock.getElapsedTime()
+    // Subtle pulse to avoid a "robotic" constant rotation.
+    const pulse = 1 + Math.sin(t * 0.6) * 0.08
+    meshRef.current.rotation.x = t * 0.12 * pulse
+    meshRef.current.rotation.y = t * 0.18 * pulse
   })
 
   return (
@@ -32,16 +35,24 @@ function FloatingMesh() {
 // ─── Orbiting ring ────────────────────────────────────────
 function OrbitRing() {
   const ringRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.MeshBasicMaterial | null>(null)
 
   useFrame(({ clock }) => {
     if (!ringRef.current) return
+    const t = clock.getElapsedTime()
     ringRef.current.rotation.x = Math.PI / 2.8
-    ringRef.current.rotation.z = clock.getElapsedTime() * 0.25
+    ringRef.current.rotation.z = t * 0.25
+
+    // Gentle opacity breathing so the background feels more alive.
+    if (materialRef.current) {
+      materialRef.current.opacity = 0.14 + Math.sin(t * 0.7) * 0.04
+    }
   })
 
   return (
     <Ring args={[1.55, 1.65, 128]}>
       <meshBasicMaterial
+        ref={materialRef}
         color="#D6CCD0"
         opacity={0.18}
         transparent
@@ -64,7 +75,9 @@ function Particles({ count = 120 }: { count?: number }) {
 
   useFrame(({ clock }) => {
     if (!points.current) return
-    points.current.rotation.y = clock.getElapsedTime() * 0.04
+    const t = clock.getElapsedTime()
+    points.current.rotation.y = t * 0.04
+    points.current.rotation.x = Math.sin(t * 0.18) * 0.07
   })
 
   return (

@@ -21,6 +21,16 @@ export const projects: Project[] = [
     featured: true,
     year: 2025,
   },
+   {
+    id: 'portfolio',
+    title: 'Developer Portfolio',
+    description:
+      'This site. Built with React, TypeScript, Tailwind v4, Three.js, and Framer Motion. Features a custom magnetic cursor, GSAP-driven animations, and a WebGL particle scene.',
+    tags: ['React', 'TypeScript', 'Three.js', 'Framer Motion', 'GSAP'],
+    repo: 'https://github.com',
+    featured: true,
+    year: 2025,
+  },
   {
     id: 'freelance-connector',
     title: 'Freelance Connector',

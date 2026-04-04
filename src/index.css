@@ -46,3 +46,43 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #0D0A0B; }
 ::-webkit-scrollbar-thumb { background: #763948; border-radius: 2px; }
+
+/* ── Layout utilities (mobile-first) ───────────────────────────── */
+@layer utilities {
+  /* Shared centered container with consistent responsive gutters. */
+  .container-wide {
+    max-width: 80rem; /* ~1280px */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:  1rem; /* 16px */
+    padding-right: 1rem; /* 16px */
+  }
+
+  /* Standard vertical spacing for each major section. */
+  .section-padding {
+    padding-top:  5.5rem;  /* 88px */
+    padding-bottom: 5.5rem; /* 88px */
+  }
+
+  @media (min-width: 768px) {
+    .container-wide {
+      padding-left:  2rem; /* 32px */
+      padding-right: 2rem; /* 32px */
+    }
+    .section-padding {
+      padding-top:  6.75rem;   /* 108px */
+      padding-bottom: 6.75rem; /* 108px */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-wide {
+      padding-left:  3rem; /* 48px */
+      padding-right: 3rem; /* 48px */
+    }
+    .section-padding {
+      padding-top:  7.5rem;   /* 120px */
+      padding-bottom: 7.5rem; /* 120px */
+    }
+  }
+}

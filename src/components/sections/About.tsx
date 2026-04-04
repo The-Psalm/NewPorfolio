@@ -1,113 +1,123 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { RevealText } from '@/components/ui/RevealText'
 import { MagneticWrapper } from '@/components/ui/MagneticWrapper'
 import { useCursorContext } from '@/components/cursor/CustomCursor'
 import { getLenis } from '@/hooks/useSmoothScroll'
-import { useScrollProgress, useScrollParallax } from '@/hooks/useScrollProgress'
 
-// ─── Stats data ───────────────────────────────────────────
-const stats = [
-  { value: '3+',   label: 'Years building' },
-  { value: '10+',  label: 'Projects shipped' },
-  { value: '100%', label: 'Self-taught' },
-  { value: '∞',    label: 'Curiosity' },
+// ─── What I offer cards ───────────────────────────────────
+const services = [
+  {
+    number: '01',
+    title:  'Web Design & Development',
+    body:   'Clean, fast, mobile-first websites built to convert visitors into customers. Every pixel is intentional — no templates, no shortcuts.',
+  },
+  {
+    number: '02',
+    title:  'Web Application Development',
+    body:   'Full-scale apps with custom backends — user authentication, databases, dashboards, APIs. Built to scale as your business grows.',
+  },
+  {
+    number: '03',
+    title:  'E-commerce & Integrations',
+    body:   'Online stores, payment integrations, booking systems, and third-party API connections. Your business logic, built exactly how you need it.',
+  }, 
+  
 ]
 
-// ─── Marquee ticker ───────────────────────────────────────
-const marqueeItems = [
-  'React', '·', 'Django', '·', 'TypeScript', '·',
-  'Three.js', '·', 'REST APIs', '·', 'Tailwind', '·',
-  'Python', '·', 'Framer Motion', '·', 'React Native', '·',
+// ─── Why hire me — concise proof points ──────────────────
+const proofPoints = [
+  {
+    value: 'Fast',
+    detail: 'Most projects delivered in 1–3 weeks, not months.',
+  },
+  {
+    value: 'Full-stack',
+    detail: 'One person handles design, frontend, and backend. No handoff delays.',
+  },
+  {
+    value: 'Affordable',
+    detail: 'Quality work at rates that make sense for growing businesses.',
+  },
+  {
+    value: 'Communicative',
+    detail: 'You stay in the loop at every stage. No disappearing acts.',
+  },
 ]
 
-function Marquee() {
-  // Double the items so the loop is seamless
-  const doubled = [...marqueeItems, ...marqueeItems]
+// ─── Service card ─────────────────────────────────────────
+function ServiceCard({
+  service,
+  index,
+  inView,
+}: {
+  service: typeof services[0]
+  index:   number
+  inView:  boolean
+}) {
+  const { setVariant } = useCursorContext()
+  const [hovered, setHovered] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
-  return (
-    <div
-      className="relative overflow-hidden py-4 border-y"
-      style={{ borderColor: 'rgba(214,204,208,0.08)' }}
-    >
-      <motion.div
-        className="flex gap-6 whitespace-nowrap"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{
-          duration:   18,
-          repeat:     Infinity,
-          ease:       'linear',
-        }}
-      >
-        {doubled.map((item, i) => (
-          <span
-            key={i}
-            className="font-sans text-sm tracking-[0.12em] uppercase shrink-0"
-            style={{
-              color: item === '·'
-                ? '#763948'
-                : 'rgba(214,204,208,0.4)',
-            }}
-          >
-            {item}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  )
-}
-
-// ─── Stat card ────────────────────────────────────────────
-interface StatCardProps {
-  value: string
-  label: string
-  index: number
-  inView: boolean
-}
-
-function StatCard({ value, label, index, inView }: StatCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      ref={ref}
+      initial={{ opacity: 0, y: 36 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.65,
-        delay:    0.1 + index * 0.08,
-        ease:     [0.16, 1, 0.3, 1],
-      }}
-      className="p-6 rounded-2xl border flex flex-col gap-1"
+      transition={{ duration: 0.7, delay: 0.1 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => { setHovered(true); setVariant('hover') }}
+      onMouseLeave={() => { setHovered(false); setVariant('default') }}
+      className="group relative p-7 rounded-2xl border transition-all duration-400 cursor-none"
       style={{
-        backgroundColor: 'rgba(214,204,208,0.03)',
+        backgroundColor: hovered ? 'rgba(118,57,72,0.05)' : 'rgba(214,204,208,0.02)',
         borderColor:     'rgba(214,204,208,0.07)',
       }}
     >
-      <span
-        className="font-display text-4xl leading-none"
-        style={{ color: '#763948' }}
-      >
-        {value}
-      </span>
-      <span
-        className="font-sans text-xs tracking-[0.1em] uppercase"
-        style={{ color: 'rgba(214,204,208,0.45)' }}
-      >
-        {label}
-      </span>
+      {/* Hover fill */}
+      <div
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+        style={{ backgroundColor: 'rgba(118,57,72,0.05)', border: '1px solid rgba(118,57,72,0.2)' }}
+      />
+
+      <div className="relative z-10">
+        {/* Number */}
+        <span
+          className="font-display block mb-4 leading-none"
+          style={{ fontSize: '2.2rem', color: 'rgba(118,57,72,0.35)', fontWeight: 300 }}
+        >
+          {service.number}
+        </span>
+
+        {/* Title */}
+        <h3
+          className="font-display mb-3 leading-snug"
+          style={{ fontSize: '1.45rem', fontWeight: 400, color: '#D6CCD0' }}
+        >
+          {service.title}
+        </h3>
+
+        {/* Body */}
+        <p
+          className="font-sans text-sm leading-relaxed"
+          style={{ color: 'rgba(214,204,208,0.5)' }}
+        >
+          {service.body}
+        </p>
+      </div>
     </motion.div>
   )
 }
 
 // ─── Main component ───────────────────────────────────────
 export function About() {
-  const sectionRef  = useRef<HTMLDivElement>(null)
-  const inView      = useInView(sectionRef, { once: true, margin: '-15% 0px' })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const proofRef   = useRef<HTMLDivElement>(null)
+  const inView     = useInView(sectionRef, { once: true, margin: '-10% 0px' })
+  const proofInView = useInView(proofRef,  { once: true, margin: '-10% 0px' })
   const { setVariant } = useCursorContext()
 
-  const { ref: parallaxRef, scrollYProgress } = useScrollProgress()
-  const { y: imgY } = useScrollParallax(scrollYProgress, 60)
-
   const scrollToContact = () => {
-    const lenis = getLenis()
+    const lenis  = getLenis()
     const target = document.querySelector('#contact')
     if (lenis && target) {
       lenis.scrollTo(target as HTMLElement, { offset: -80, duration: 1.6 })
@@ -121,6 +131,11 @@ export function About() {
       className="relative section-padding"
       style={{ backgroundColor: '#0D0A0B' }}
     >
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ backgroundColor: 'rgba(214,204,208,0.06)' }}
+      />
+
       <div className="container-wide">
 
         {/* ── Section label ─────────────────────────── */}
@@ -135,15 +150,13 @@ export function About() {
             className="font-sans text-xs tracking-[0.2em] uppercase"
             style={{ color: 'rgba(214,204,208,0.45)' }}
           >
-            About
+            What I do
           </span>
         </motion.div>
 
-        {/* ── Main grid ─────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-
-          {/* Left — text */}
-          <div className="flex flex-col gap-8">
+        {/* ── Header + hook ─────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-20">
+          <div>
             <RevealText
               as="h2"
               splitBy="words"
@@ -153,148 +166,160 @@ export function About() {
               className="leading-[1.05]"
               style={{
                 fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontSize:   'clamp(2.4rem, 5vw, 4rem)',
+                fontSize:   'clamp(2.4rem, 5vw, 4.2rem)',
                 fontWeight: 300,
                 color:      '#D6CCD0',
               } as React.CSSProperties}
             >
-              Coded my first site on a phone. Haven't stopped since.
+              Your business deserves a website that works as hard as you do.
             </RevealText>
+          </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-5"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col gap-6"
+          >
+            <p
+              className="font-sans leading-relaxed"
               style={{
-                color:      'rgba(214,204,208,0.6)',
-                fontFamily: '"Cabinet Grotesk", "DM Sans", sans-serif',
-                fontSize:   '1.0rem',
-                lineHeight: 1.8,
+                fontSize: '1rem',
+                color:    'rgba(214,204,208,0.55)',
+                maxWidth: '44ch',
               }}
             >
-              <p>
-                I'm Samuel — a 17-year-old full-stack developer from Lagos, Nigeria.
-                I started learning to code without a laptop, building projects on a
-                phone screen until I saved up for one. That stubbornness is still
-                the engine behind everything I build.
-              </p>
-              <p>
-                I work across the full stack — React and TypeScript on the front,
-                Django and REST on the back. Right now I'm deepening my work in{' '}
-                <span style={{ color: '#D6CCD0' }}>3D web experiences</span> and{' '}
-                <span style={{ color: '#D6CCD0' }}>mobile development</span>, and
-                building SafeSwap — an escrow platform solving real trust problems
-                in Nigerian informal markets.
-              </p>
-              <p>
-                When I'm not coding I'm gaming, editing video, or studying how
-                the best products in the world are designed.
-              </p>
-            </motion.div>
+              A slow, outdated, or non-existent web presence is costing you
+              customers every day. I build digital products that look
+              credible, load fast, and turn visitors into paying clients.
+            </p>
 
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <MagneticWrapper strength={0.3}>
-                <button
-                  onClick={scrollToContact}
-                  onMouseEnter={() => setVariant('hover')}
-                  onMouseLeave={() => setVariant('default')}
-                  className="group flex items-center gap-3 font-sans text-sm tracking-wide"
-                  style={{ color: '#D6CCD0' }}
-                >
-                  <span className="relative overflow-hidden">
-                    <span className="block transition-transform duration-300 group-hover:-translate-y-full">
-                      Let's work together
-                    </span>
-                    <span
-                      className="absolute inset-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0"
-                      style={{ color: '#763948' }}
-                    >
-                      Let's work together
-                    </span>
+            {/* CTA inline */}
+            <MagneticWrapper strength={0.25}>
+              <button
+                onClick={scrollToContact}
+                onMouseEnter={() => setVariant('hover')}
+                onMouseLeave={() => setVariant('default')}
+                className="group inline-flex items-center gap-3 font-sans text-sm tracking-wide cursor-none self-start"
+                style={{ color: '#D6CCD0' }}
+              >
+                {/* Text swap on hover */}
+                <span className="relative overflow-hidden h-5">
+                  <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                    Start a project
                   </span>
-                  {/* Animated arrow */}
-                  <svg
-                    width="16" height="16" viewBox="0 0 16 16" fill="none"
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                    style={{ stroke: 'currentColor' }}
+                  <span
+                    className="absolute inset-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0"
+                    style={{ color: '#763948' }}
                   >
-                    <path d="M3 8h10M9 4l4 4-4 4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </MagneticWrapper>
-            </motion.div>
-          </div>
-
-          {/* Right — stats + image placeholder + marquee */}
-          <div
-            ref={parallaxRef as React.RefObject<HTMLDivElement>}
-            className="flex flex-col gap-8"
-          >
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {stats.map((stat, i) => (
-                <StatCard
-                  key={stat.label}
-                  {...stat}
-                  index={i}
-                  inView={inView}
-                />
-              ))}
-            </div>
-
-            {/* Portrait placeholder — swap with real photo */}
-            <motion.div
-              style={{ y: imgY }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden"
-              style={{
-                backgroundColor: 'rgba(214,204,208,0.04)',
-                border:          '1px solid rgba(214,204,208,0.07)',
-              } as React.CSSProperties}
-            >
-              {/* Placeholder grid pattern */}
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(rgba(214,204,208,0.15) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(214,204,208,0.15) 1px, transparent 1px)
-                  `,
-                  backgroundSize: '40px 40px',
-                }}
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                <span
-                  className="font-sans text-xs tracking-[0.15em] uppercase"
-                  style={{ color: 'rgba(214,204,208,0.25)' }}
+                    Start a project
+                  </span>
+                </span>
+                <svg
+                  width="16" height="16" viewBox="0 0 16 16" fill="none"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
                 >
-                  Photo coming soon
+                  <path
+                    d="M3 8h10M9 4l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </MagneticWrapper>
+          </motion.div>
+        </div>
+
+        {/* ── Services grid ─────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-24">
+          {services.map((service, i) => (
+            <ServiceCard
+              key={service.number}
+              service={service}
+              index={i}
+              inView={inView}
+            />
+          ))}
+        </div>
+
+        {/* ── Why hire me ───────────────────────────── */}
+        <div ref={proofRef}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={proofInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-4 mb-10"
+          >
+            <span
+              className="font-sans text-xs tracking-[0.2em] uppercase"
+              style={{ color: 'rgba(214,204,208,0.35)' }}
+            >
+              Why work with me
+            </span>
+            <div
+              className="flex-1 h-px"
+              style={{ backgroundColor: 'rgba(214,204,208,0.06)' }}
+            />
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {proofPoints.map((point, i) => (
+              <motion.div
+                key={point.value}
+                initial={{ opacity: 0, y: 24 }}
+                animate={proofInView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.6,
+                  delay:    i * 0.09,
+                  ease:     [0.16, 1, 0.3, 1],
+                }}
+                className="flex flex-col gap-2 py-6 border-t"
+                style={{ borderColor: 'rgba(214,204,208,0.08)' }}
+              >
+                <span
+                  className="font-display"
+                  style={{ fontSize: '1.7rem', color: '#763948', fontWeight: 400 }}
+                >
+                  {point.value}
                 </span>
-                <span style={{ color: 'rgba(118,57,72,0.5)', fontSize: '2rem' }}>
-                  SA
+                <span
+                  className="font-sans text-sm leading-relaxed"
+                  style={{ color: 'rgba(214,204,208,0.45)' }}
+                >
+                  {point.detail}
                 </span>
-              </div>
-              {/* Wine corner accent */}
-              <div
-                className="absolute bottom-0 right-0 w-24 h-24 rounded-tl-3xl"
-                style={{ backgroundColor: 'rgba(118,57,72,0.15)' }}
-              />
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* ── Marquee ticker ─────────────────────────── */}
-      <div className="mt-24">
-        <Marquee />
+        {/* ── Marquee ───────────────────────────────── */}
+        <div className="mt-24 -mx-6 md:-mx-12 overflow-hidden border-y py-4"
+          style={{ borderColor: 'rgba(214,204,208,0.07)' }}
+        >
+          <motion.div
+            className="flex gap-6 whitespace-nowrap"
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          >
+            {[...Array(2)].map((_, di) =>
+              ['React', '·', 'Django', '·', 'TypeScript', '·', 'Three.js', '·',
+               'REST APIs', '·', 'Tailwind CSS', '·', 'Python', '·', 'UI / UX', '·'].map((item, i) => (
+                <span
+                  key={`${di}-${i}`}
+                  className="font-sans text-sm tracking-[0.1em] uppercase shrink-0"
+                  style={{
+                    color: item === '·' ? '#763948' : 'rgba(214,204,208,0.35)',
+                  }}
+                >
+                  {item}
+                </span>
+              ))
+            )}
+          </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -43,7 +43,7 @@ export function Navbar() {
         animate={{ y: hidden ? -100 : 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 px-6 md:px-12',
+          'fixed top-0 left-0 right-0 z-50 relative px-4 sm:px-6 lg:px-12',
           'transition-all duration-500',
           scrolled
             ? 'py-4 border-b border-white/[0.06] backdrop-blur-md'
@@ -53,6 +53,17 @@ export function Navbar() {
           backgroundColor: scrolled ? 'rgba(13, 10, 11, 0.85)' : 'transparent',
         }}
       >
+        {/* Depth gradient (kept subtle so it doesn't fight content) */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            opacity: scrolled ? 1 : 0,
+            transition: 'opacity 250ms ease',
+            background:
+              'radial-gradient(900px 250px at 50% 0%, rgba(118,57,72,0.20), rgba(13,10,11,0) 55%)',
+          }}
+        />
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
 
           {/* Logo / Name */}
@@ -65,7 +76,7 @@ export function Navbar() {
             >
               {/* Monogram mark */}
               <span
-                className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-sans font-bold tracking-wider transition-colors duration-300"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-sans font-bold tracking-[0.14em] transition-colors duration-300"
                 style={{
                   backgroundColor: '#763948',
                   color: '#D6CCD0',
@@ -74,7 +85,7 @@ export function Navbar() {
                 SA
               </span>
               <span
-                className="font-sans text-sm font-medium tracking-[0.12em] uppercase transition-colors duration-300"
+                className="font-sans text-sm font-medium tracking-[0.14em] uppercase transition-colors duration-300"
                 style={{ color: '#D6CCD0' }}
               >
                 Samuel
@@ -102,7 +113,7 @@ export function Navbar() {
                 onClick={() => handleNavClick('#contact')}
                 onMouseEnter={() => setVariant('hover')}
                 onMouseLeave={() => setVariant('default')}
-                className="relative group flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-sans font-medium tracking-wide overflow-hidden transition-all duration-300"
+                className="relative group flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-sans font-medium tracking-[0.12em] overflow-hidden transition-all duration-300"
                 style={{
                   border: '1px solid rgba(118, 57, 72, 0.6)',
                   color:  '#D6CCD0',
@@ -160,10 +171,11 @@ export function Navbar() {
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
         style={{
           pointerEvents:   menuOpen ? 'all' : 'none',
-          backgroundColor: 'rgba(13, 10, 11, 0.97)',
+          background:
+            'radial-gradient(900px 420px at 50% -10%, rgba(118,57,72,0.20), rgba(13,10,11,0.97) 60%)',
           backdropFilter:  'blur(12px)',
         }}
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 md:hidden"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 px-6 md:hidden"
       >
         {navLinks.map((link: NavLink, i: number) => (
           <motion.button
@@ -172,7 +184,7 @@ export function Navbar() {
             animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number,number,number,number] }}
             onClick={() => handleNavClick(link.href)}
-            className="font-display italic text-4xl"
+            className="font-display italic text-3xl sm:text-4xl tracking-[0.01em] leading-none"
             style={{ color: '#D6CCD0' }}
           >
             {link.label}
@@ -199,7 +211,7 @@ function NavItem({ label, onClick }: NavItemProps) {
       onClick={onClick}
       onMouseEnter={() => setVariant('text')}
       onMouseLeave={() => setVariant('default')}
-      className="group relative font-sans text-sm tracking-[0.08em] uppercase"
+      className="group relative font-sans text-xs sm:text-sm tracking-[0.14em] uppercase leading-none px-1 py-2 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[rgba(214,204,208,0.55)]"
       style={{ color: 'rgba(214, 204, 208, 0.65)' }}
     >
       <span className="transition-colors duration-300 group-hover:text-[#D6CCD0]">
@@ -207,7 +219,7 @@ function NavItem({ label, onClick }: NavItemProps) {
       </span>
       {/* Underline that grows from left */}
       <span
-        className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full transition-all duration-300 origin-left"
+        className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full transition-[width] duration-300 origin-left"
         style={{ backgroundColor: '#763948' }}
       />
     </button>

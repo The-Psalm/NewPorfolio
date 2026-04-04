@@ -47,6 +47,10 @@ export function useCursor() {
     let idleTl:    gsap.core.Timeline | null = null
 
     const startIdleBreath = () => {
+      // The `text` variant is already a compact pill shape.
+      // Breathing (scaling) can make it look distorted/warped on link hovers.
+      if (variantRef.current === 'text') return
+
       idleTl = gsap.timeline({ repeat: -1, yoyo: true })
         .to(blob, { scale: 1.3, duration: 1.5, ease: 'sine.inOut' }, 0)
       if (trail) idleTl.to(trail, { scale: 1.15, duration: 1.8, ease: 'sine.inOut' }, 0.3)
@@ -88,13 +92,21 @@ export function useCursor() {
       const speed = Math.sqrt(vx * vx + vy * vy)         // px/ms
       const speedN = Math.min(speed / 1.25, 1)
       const angle = Math.atan2(vy, vx) * (180 / Math.PI) // degrees
-      const rotation = angle * (0.25 + speedN * 0.75)
+      const rotationBase = angle * (0.25 + speedN * 0.75)
+
+      // Navbar links use the `text` variant. The blob becomes a wide pill there;
+      // keeping dot rotation/squish active can make it look "distorted" or misaligned.
+      const variant = variantRef.current
+      const isTextVariant = variant === 'text'
+
+      const rotation = isTextVariant ? 0 : rotationBase
 
       posRef.current = { x: e.clientX, y: e.clientY }
 
       // Velocity squish — elongate dot in direction of travel
-      const stretch = Math.min(1 + speedN * 2.2, 3)
-      const squish  = Math.max(1 / stretch, 0.35)
+      const stretchRaw = Math.min(1 + speedN * 2.2, 3)
+      const stretch = isTextVariant ? 1 : stretchRaw
+      const squish  = isTextVariant ? 1 : Math.max(1 / stretchRaw, 0.35)
 
       gsap.to(dot, {
         x: e.clientX,
@@ -108,15 +120,20 @@ export function useCursor() {
       })
 
       // Elastic snap back to perfect circle
-      gsap.to(dot, {
-        scaleX: 1,
-        scaleY: 1,
-        rotation: 0,
-        duration: 0.45,
-        ease: 'elastic.out(1, 0.35)',
-        delay: 0.03,
-        overwrite: 'auto',
-      })
+      if (!isTextVariant) {
+        gsap.to(dot, {
+          scaleX: 1,
+          scaleY: 1,
+          rotation: 0,
+          duration: 0.45,
+          ease: 'elastic.out(1, 0.35)',
+          delay: 0.03,
+          overwrite: 'auto',
+        })
+      } else {
+        // Keep dot stable over text links.
+        gsap.set(dot, { scaleX: 1, scaleY: 1, rotation: 0 })
+      }
 
       // Blob: fluid spring follow
       gsap.to(blob, {
@@ -124,7 +141,6 @@ export function useCursor() {
         y: e.clientY,
         duration: 0.45,
         ease: 'power3.out',
-        overwrite: 'auto',
       })
 
       // Trail: ghost ring with extra lag
@@ -134,7 +150,6 @@ export function useCursor() {
           y: e.clientY,
           duration: 0.8,
           ease: 'power2.out',
-          overwrite: 'auto',
           opacity: 0.14 + speedN * 0.42,
           scale: 1 + speedN * 0.18,
           boxShadow: `0 0 ${12 + speedN * 26}px rgba(118,57,72,${0.04 + speedN * 0.18})`,
