@@ -5,13 +5,6 @@ import { MagneticWrapper } from '@/components/ui/MagneticWrapper'
 import { useCursorContext } from '@/components/cursor/CustomCursor'
 import { siteConfig } from '@/data/constants'
 
-const socials = [
-  { key: 'github',   label: 'GitHub'   },
-  { key: 'instagram', label: 'Instagram' },
-  { key: 'twitter',  label: 'Twitter / X' },
-  { key: 'whatsapp',  label: 'Whatsapp' },
-]
-
 function SocialRow({ href, label, index, inView }: { href: string; label: string; index: number; inView: boolean }) {
   const { setVariant } = useCursorContext()
   const [hovered, setHovered] = useState(false)
@@ -81,22 +74,18 @@ export function Contact() {
 
         {/* Large heading */}
         <div className="mb-20">
-          <RevealText
-            as="h2"
-            splitBy="words"
-            stagger={0.07}
-            distance={40}
-            style={{
+          <div style={{
               fontFamily:    'var(--font-display)',
               fontSize:      'clamp(2.6rem, 6vw, 5.5rem)',
               fontWeight:    400,
               color:         'var(--color-text-primary)',
               letterSpacing: '-0.02em',
               lineHeight:    1.0,
-            } as React.CSSProperties}
-          >
-            Got a project in mind?
-          </RevealText>
+            }}>
+            <RevealText as="h2" splitBy="words" stagger={0.07} distance={40}>
+              Got a project in mind?
+            </RevealText>
+          </div>
         </div>
 
         {/* Two-column layout */}

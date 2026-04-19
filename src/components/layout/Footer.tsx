@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { MagneticWrapper } from '@/components/ui/MagneticWrapper'
 import { useCursorContext } from '@/components/cursor/CustomCursor'
 import { navLinks, siteConfig } from '@/data/constants'

@@ -322,22 +322,18 @@ export function About() {
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 'clamp(2rem, 5vw, 3rem)' }}>
 
             {/* Large heading */}
-            <RevealText
-              as="h2"
-              splitBy="words"
-              stagger={0.07}
-              distance={40}
-              style={{
+            <div style={{
                 fontFamily:    'var(--font-display)',
                 fontSize:      'clamp(2rem, 3.8vw, 3.4rem)',
                 fontWeight:    400,
                 color:         'var(--color-text-primary)',
                 letterSpacing: '-0.025em',
                 lineHeight:    1.06,
-              } as React.CSSProperties}
-            >
-              Your business deserves a website that works as hard as you do.
-            </RevealText>
+              }}>
+              <RevealText as="h2" splitBy="words" stagger={0.07} distance={40}>
+                Your business deserves a website that works as hard as you do.
+              </RevealText>
+            </div>
 
             {/* Bio paragraph */}
             <motion.p

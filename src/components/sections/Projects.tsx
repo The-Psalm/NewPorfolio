@@ -193,22 +193,18 @@ export function Projects() {
               Selected work
             </motion.p>
 
-            <RevealText
-              as="h2"
-              splitBy="words"
-              stagger={0.07}
-              distance={40}
-              style={{
+            <div style={{
                 fontFamily:    'var(--font-display)',
                 fontSize:      'clamp(2.2rem, 4.5vw, 3.6rem)',
                 fontWeight:    400,
                 color:         'var(--color-text-primary)',
                 letterSpacing: '-0.02em',
                 lineHeight:    1.05,
-              } as React.CSSProperties}
-            >
-              Things I've built
-            </RevealText>
+              }}>
+              <RevealText as="h2" splitBy="words" stagger={0.07} distance={40}>
+                Things I've built
+              </RevealText>
+            </div>
           </div>
 
           {/* Count */}

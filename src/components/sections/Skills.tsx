@@ -127,22 +127,18 @@ export function Skills() {
               Capabilities
             </motion.p>
 
-            <RevealText
-              as="h2"
-              splitBy="words"
-              stagger={0.07}
-              distance={40}
-              style={{
+            <div style={{
                 fontFamily:    'var(--font-display)',
                 fontSize:      'clamp(2.2rem, 4.5vw, 3.6rem)',
                 fontWeight:    400,
                 color:         'var(--color-text-primary)',
                 letterSpacing: '-0.02em',
                 lineHeight:    1.05,
-              } as React.CSSProperties}
-            >
-              What I work with
-            </RevealText>
+              }}>
+              <RevealText as="h2" splitBy="words" stagger={0.07} distance={40}>
+                What I work with
+              </RevealText>
+            </div>
           </div>
 
           {/* Filter pills */}
@@ -188,7 +184,7 @@ export function Skills() {
             <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
               <p className="mono-label mb-6">Currently learning</p>
               <div className="flex flex-col gap-4">
-                {['React Native & Expo', 'WebGL / GLSL Shaders', 'System Design'].map((item, i) => (
+                {['React Native & Expo', 'WebGL / GLSL Shaders', 'System Design'].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: 'var(--color-accent)' }} />
                     <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 300 }}>
