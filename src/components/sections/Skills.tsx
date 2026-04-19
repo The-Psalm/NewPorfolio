@@ -5,7 +5,6 @@ import { useCursorContext } from '@/components/cursor/CustomCursor'
 import { skills, levelLabel } from '@/data/skills'
 import type { Skill } from '@/types'
 
-// ─── Category filter tabs ─────────────────────────────────
 const categories: { key: Skill['category'] | 'all'; label: string }[] = [
   { key: 'all',      label: 'All'      },
   { key: 'frontend', label: 'Frontend' },
@@ -13,83 +12,61 @@ const categories: { key: Skill['category'] | 'all'; label: string }[] = [
   { key: 'tools',    label: 'Tools'    },
 ]
 
-// ─── Level bar widths ─────────────────────────────────────
-const levelWidth: Record<Skill['level'], string> = {
-  1: '35%',
-  2: '68%',
-  3: '95%',
-}
+const levelWidth: Record<Skill['level'], string> = { 1: '35%', 2: '68%', 3: '95%' }
 
-// ─── Single skill row ─────────────────────────────────────
-function SkillRow({
-  skill,
-  index,
-  inView,
-}: {
-  skill:  Skill
-  index:  number
-  inView: boolean
-}) {
+// ─── Single row ───────────────────────────────────────────
+function SkillRow({ skill, index, inView }: { skill: Skill; index: number; inView: boolean }) {
   const { setVariant } = useCursorContext()
   const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -12 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.45, delay: index * 0.04, ease: [0.16, 1, 0.3, 1] }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.035, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={() => { setHovered(true); setVariant('hover') }}
       onMouseLeave={() => { setHovered(false); setVariant('default') }}
-      className="group flex items-center gap-4 py-4 border-b cursor-none"
-      style={{ borderColor: 'rgba(214,204,208,0.07)' }}
+      className="group flex items-center gap-3 py-3 sm:gap-4 sm:py-4 cursor-none"
+      style={{ borderBottom: '1px solid var(--color-border)' }}
     >
-      {/* Skill name */}
       <span
-        className="font-sans text-sm w-40 shrink-0 transition-colors duration-200"
-        style={{ color: hovered ? '#D6CCD0' : 'rgba(214,204,208,0.7)' }}
+        className="shrink-0 transition-colors duration-200"
+        style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 'clamp(0.8125rem, 1vw, 0.9375rem)',
+          fontWeight: 400,
+          width: 'clamp(7rem, 14vw, 11rem)',
+          color: hovered ? 'var(--color-text-primary)' : 'var(--color-text-secondary)',
+        }}
       >
         {skill.name}
       </span>
 
-      {/* Animated bar */}
-      <div
-        className="flex-1 h-px relative overflow-visible"
-        style={{ backgroundColor: 'rgba(214,204,208,0.08)' }}
-      >
+      {/* Bar track */}
+      <div className="flex-1 relative" style={{ height: '1px', backgroundColor: 'var(--color-border)' }}>
         <motion.div
-          className="absolute top-0 left-0 h-px"
-          style={{ backgroundColor: hovered ? '#D6CCD0' : '#763948' }}
+          className="absolute top-0 left-0 h-full"
+          style={{ backgroundColor: hovered ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
           initial={{ width: '0%' }}
           animate={inView ? { width: levelWidth[skill.level] } : { width: '0%' }}
-          transition={{
-            duration: 1.1,
-            delay:    0.1 + index * 0.05,
-            ease:     [0.16, 1, 0.3, 1],
-          }}
+          transition={{ duration: 1.2, delay: 0.1 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}
         />
-        {/* Dot at end of bar */}
+        {/* End dot */}
         <motion.div
           className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
-          style={{ backgroundColor: hovered ? '#D6CCD0' : '#763948' }}
+          style={{ backgroundColor: hovered ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
           initial={{ left: '0%', opacity: 0 }}
-          animate={inView
-            ? { left: levelWidth[skill.level], opacity: 1 }
-            : { left: '0%', opacity: 0 }
-          }
-          transition={{
-            duration: 1.1,
-            delay:    0.1 + index * 0.05,
-            ease:     [0.16, 1, 0.3, 1],
-          }}
+          animate={inView ? { left: levelWidth[skill.level], opacity: 1 } : { left: '0%', opacity: 0 }}
+          transition={{ duration: 1.2, delay: 0.1 + index * 0.04, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
 
-      {/* Level label */}
+      {/* Label */}
       <span
-        className="font-sans text-xs w-20 text-right shrink-0 tracking-wide transition-colors duration-200"
-        style={{ color: hovered ? 'rgba(214,204,208,0.6)' : 'rgba(214,204,208,0.25)' }}
+        className="shrink-0 transition-colors duration-200"
+        style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', width: '5rem', textAlign: 'right', color: hovered ? 'var(--color-text-secondary)' : 'rgba(240,237,230,0.2)' }}
       >
         {levelLabel[skill.level]}
       </span>
@@ -97,16 +74,8 @@ function SkillRow({
   )
 }
 
-// ─── Category pill ────────────────────────────────────────
-function FilterPill({
-  label,
-  active,
-  onClick,
-}: {
-  label:   string
-  active:  boolean
-  onClick: () => void
-}) {
+// ─── Filter pill ──────────────────────────────────────────
+function FilterPill({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   const { setVariant } = useCursorContext()
 
   return (
@@ -114,83 +83,62 @@ function FilterPill({
       onClick={onClick}
       onMouseEnter={() => setVariant('hover')}
       onMouseLeave={() => setVariant('default')}
-      className="relative px-5 py-2 rounded-full font-sans text-xs tracking-[0.12em] uppercase transition-colors duration-300 cursor-none overflow-hidden"
+      className="cursor-none transition-colors duration-200"
       style={{
-        color: active ? '#D6CCD0' : 'rgba(214,204,208,0.4)',
-        border: `1px solid ${active ? 'rgba(118,57,72,0.6)' : 'rgba(214,204,208,0.1)'}`,
+        fontFamily:    'var(--font-mono)',
+        fontSize:      '0.6875rem',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        padding:       '0.4rem 0.875rem',
+        borderRadius:  '2px',
+        border:        `1px solid ${active ? 'var(--color-accent)' : 'var(--color-border)'}`,
+        color:         active ? 'var(--color-accent)' : 'var(--color-text-secondary)',
+        backgroundColor: active ? 'transparent' : 'transparent',
       }}
     >
-      {active && (
-        <motion.span
-          layoutId="pill-bg"
-          className="absolute inset-0 rounded-full"
-          style={{ backgroundColor: 'rgba(118,57,72,0.2)' }}
-          transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
-        />
-      )}
-      <span className="relative z-10">{label}</span>
+      {label}
     </button>
   )
 }
 
-// ─── Main component ───────────────────────────────────────
+// ─── Section ──────────────────────────────────────────────
 export function Skills() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const listRef    = useRef<HTMLDivElement>(null)
-  const inView     = useInView(sectionRef, { once: true, margin: '-10% 0px' })
-  const listInView = useInView(listRef,    { once: true, margin: '-5% 0px'  })
-
+  const inView     = useInView(sectionRef, { once: true, margin: '-8% 0px' })
+  const listInView = useInView(listRef,    { once: true, margin: '-5% 0px' })
   const [activeCategory, setActiveCategory] = useState<Skill['category'] | 'all'>('all')
 
-  const filtered = activeCategory === 'all'
-    ? skills
-    : skills.filter((s) => s.category === activeCategory)
+  const filtered = activeCategory === 'all' ? skills : skills.filter(s => s.category === activeCategory)
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="relative section-padding"
-      style={{ backgroundColor: '#0D0A0B' }}
-    >
-      {/* Top divider */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ backgroundColor: 'rgba(214,204,208,0.06)' }}
-      />
-
+    <section id="skills" ref={sectionRef} className="section-padding section-bg" style={{ borderTop: '1px solid var(--color-border)' }}>
       <div className="container-wide">
 
-        {/* ── Header ──────────────────────────────────── */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-3 mb-6"
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6 }}
+              className="mono-label mb-8"
             >
-              <span className="w-8 h-px" style={{ backgroundColor: '#763948' }} />
-              <span
-                className="font-sans text-xs tracking-[0.2em] uppercase"
-                style={{ color: 'rgba(214,204,208,0.45)' }}
-              >
-                Capabilities
-              </span>
-            </motion.div>
+              Capabilities
+            </motion.p>
 
             <RevealText
               as="h2"
               splitBy="words"
-              delay={0.05}
-              stagger={0.08}
-              distance={50}
-              className="leading-[1.0]"
+              stagger={0.07}
+              distance={40}
               style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontSize:   'clamp(2.4rem, 5vw, 4rem)',
-                fontWeight: 300,
-                color:      '#D6CCD0',
+                fontFamily:    'var(--font-display)',
+                fontSize:      'clamp(2.2rem, 4.5vw, 3.6rem)',
+                fontWeight:    400,
+                color:         'var(--color-text-primary)',
+                letterSpacing: '-0.02em',
+                lineHeight:    1.05,
               } as React.CSSProperties}
             >
               What I work with
@@ -199,12 +147,12 @@ export function Skills() {
 
           {/* Filter pills */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap gap-2"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap gap-2 shrink-0"
           >
-            {categories.map((cat) => (
+            {categories.map(cat => (
               <FilterPill
                 key={cat.key}
                 label={cat.label}
@@ -215,152 +163,62 @@ export function Skills() {
           </motion.div>
         </div>
 
-        {/* ── Skills list + side panel ─────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-20">
+        {/* Skills list + side panel */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_15rem] lg:grid-cols-[1fr_18rem] gap-12 md:gap-14 lg:gap-20">
 
-          {/* Skill rows — takes 2 columns */}
-          <div ref={listRef} className="lg:col-span-2">
+          {/* Skill rows */}
+          <div ref={listRef}>
+            {/* Opening rule */}
+            <div className="hr mb-0" />
             <AnimatePresence mode="popLayout">
-              {filtered.map((skill, i) => (
-                <SkillRow
-                  key={skill.name}
-                  skill={skill}
-                  index={i}
-                  inView={listInView}
-                />
+              {filtered.map((s, i) => (
+                <SkillRow key={s.name} skill={s} index={i} inView={listInView} />
               ))}
             </AnimatePresence>
           </div>
 
-          {/* Side panel — currently learning */}
+          {/* Side panel */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-6"
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="flex flex-col gap-8"
           >
-            {/* Currently learning card */}
-            <div
-              className="p-6 rounded-2xl border"
-              style={{
-                backgroundColor: 'rgba(118,57,72,0.06)',
-                borderColor:     'rgba(118,57,72,0.2)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-5">
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse"
-                  style={{ backgroundColor: '#763948' }}
-                />
-                <span
-                  className="font-sans text-xs tracking-[0.15em] uppercase"
-                  style={{ color: 'rgba(214,204,208,0.45)' }}
-                >
-                  Currently learning
-                </span>
-              </div>
-              <div className="flex flex-col gap-3">
+            {/* Currently learning */}
+            <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
+              <p className="mono-label mb-6">Currently learning</p>
+              <div className="flex flex-col gap-4">
                 {['React Native & Expo', 'WebGL / GLSL Shaders', 'System Design'].map((item, i) => (
-                  <motion.div
-                    key={item}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.6 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex items-center gap-3"
-                  >
-                    <span
-                      className="w-4 h-px shrink-0"
-                      style={{ backgroundColor: 'rgba(118,57,72,0.5)' }}
-                    />
-                    <span
-                      className="font-sans text-sm"
-                      style={{ color: 'rgba(214,204,208,0.65)' }}
-                    >
+                  <div key={item} className="flex items-center gap-3">
+                    <div className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: 'var(--color-accent)' }} />
+                    <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', color: 'var(--color-text-secondary)', fontWeight: 300 }}>
                       {item}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Philosophy card */}
-            <div
-              className="p-6 rounded-2xl border"
-              style={{
-                backgroundColor: 'rgba(214,204,208,0.02)',
-                borderColor:     'rgba(214,204,208,0.07)',
-              }}
-            >
-              <span
-                className="font-sans text-xs tracking-[0.15em] uppercase block mb-4"
-                style={{ color: 'rgba(214,204,208,0.3)' }}
-              >
-                Approach
-              </span>
-              <p
-                className="font-display italic leading-snug"
-                style={{
-                  fontSize:   '1.3rem',
-                  color:      'rgba(214,204,208,0.6)',
-                  fontWeight: 300,
-                }}
-              >
+            {/* Quote */}
+            <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
+              <p className="mono-label mb-4">Approach</p>
+              <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 400, fontStyle: 'italic', color: 'var(--color-text-secondary)', lineHeight: 1.55 }}>
                 "Learn it by building something real with it."
               </p>
             </div>
 
-            {/* Skill count summary */}
-            <div className="flex items-center gap-4">
-              <div className="text-center">
-                <div
-                  className="font-display"
-                  style={{ fontSize: '2rem', color: '#763948', lineHeight: 1 }}
-                >
-                  {skills.filter(s => s.level === 3).length}
+            {/* Stats */}
+            <div className="flex gap-8" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
+              {[
+                { n: skills.filter(s => s.level === 3).length, label: 'Expert' },
+                { n: skills.filter(s => s.level === 2).length, label: 'Proficient' },
+                { n: skills.filter(s => s.level === 1).length, label: 'Familiar' },
+              ].map(({ n, label }) => (
+                <div key={label} className="flex flex-col gap-1">
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', fontWeight: 400, color: 'var(--color-accent)', lineHeight: 1 }}>{n}</span>
+                  <span className="mono-label">{label}</span>
                 </div>
-                <div
-                  className="font-sans text-xs tracking-wider uppercase mt-1"
-                  style={{ color: 'rgba(214,204,208,0.3)' }}
-                >
-                  Expert
-                </div>
-              </div>
-              <div
-                className="w-px h-10 self-center"
-                style={{ backgroundColor: 'rgba(214,204,208,0.1)' }}
-              />
-              <div className="text-center">
-                <div
-                  className="font-display"
-                  style={{ fontSize: '2rem', color: 'rgba(118,57,72,0.7)', lineHeight: 1 }}
-                >
-                  {skills.filter(s => s.level === 2).length}
-                </div>
-                <div
-                  className="font-sans text-xs tracking-wider uppercase mt-1"
-                  style={{ color: 'rgba(214,204,208,0.3)' }}
-                >
-                  Proficient
-                </div>
-              </div>
-              <div
-                className="w-px h-10 self-center"
-                style={{ backgroundColor: 'rgba(214,204,208,0.1)' }}
-              />
-              <div className="text-center">
-                <div
-                  className="font-display"
-                  style={{ fontSize: '2rem', color: 'rgba(118,57,72,0.4)', lineHeight: 1 }}
-                >
-                  {skills.filter(s => s.level === 1).length}
-                </div>
-                <div
-                  className="font-sans text-xs tracking-wider uppercase mt-1"
-                  style={{ color: 'rgba(214,204,208,0.3)' }}
-                >
-                  Familiar
-                </div>
-              </div>
+              ))}
             </div>
           </motion.div>
         </div>

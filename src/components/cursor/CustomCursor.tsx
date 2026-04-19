@@ -114,7 +114,7 @@ export function CursorProvider({ children }: CursorProviderProps) {
           ...base,
           width:       70,
           height:      70,
-          border:      '1px solid rgba(214, 204, 208, 0.12)',
+          border:      '1px solid rgba(240, 237, 230, 0.08)',
           background:  'transparent',
           zIndex:      9995,
           willChange:  'transform',
@@ -129,9 +129,8 @@ export function CursorProvider({ children }: CursorProviderProps) {
           ...base,
           width:       40,
           height:      40,
-          border:      '1.5px solid rgba(214, 204, 208, 0.45)',
+          border:      '1px solid rgba(240, 237, 230, 0.3)',
           background:  'transparent',
-          boxShadow:   '0 0 12px 2px rgba(118,57,72,0.08)',
           zIndex:      9996,
           willChange:  'transform, width, height',
         }}
@@ -143,12 +142,11 @@ export function CursorProvider({ children }: CursorProviderProps) {
         aria-hidden="true"
         style={{
           ...base,
-          width:           8,
-          height:          8,
-          background:      '#D6CCD0',
-          boxShadow:       '0 0 6px 2px rgba(214,204,208,0.35)',
-          zIndex:          9999,
-          willChange:      'transform',
+          width:       6,
+          height:      6,
+          background:  'var(--color-text-primary)',
+          zIndex:      9999,
+          willChange:  'transform',
         }}
       />
     </CursorContext.Provider>

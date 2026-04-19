@@ -8,10 +8,15 @@ export const navLinks: NavLink[] = [
 ]
 
 export const siteConfig = {
-  name:     'Samuel Adeyemi',
+  name:     'Samuel Adebusuyi',
   short:    'SA',
   title:    'Full-Stack Developer',
-  email:    'samuel@example.com',
+  email:    'adebusuyisamuel3@gmail.com',
   github:   'https://github.com',
-  linkedin: 'https://linkedin.com',
+  instagram: 'https://instagram.com',
+  twitter:  'https://twitter.com',
+  whatsapp: 'https://wa.me/qr/OO6FO5OOMWG7F1',
+  // Drop your portrait here — e.g. '/portrait.jpg' (place file in /public)
+  portrait: '' as string,
 }
+

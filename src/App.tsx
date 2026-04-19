@@ -7,24 +7,39 @@ import { About } from '@/components/sections/About'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { Contact } from '@/components/sections/Contact'
+import { Testimonials } from '@/components/sections/Testimonials'
+import { FadeUp } from '@/components/ui/FadeUp'
 
 function AppInner() {
   useSmoothScroll()
 
   return (
-    <div className="relative" style={{ backgroundColor: '#0D0A0B', color: '#D6CCD0' }}>
+    <div style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text-primary)', fontFamily: 'var(--font-sans)' }}>
       <Navbar />
       <main>
+        {/* Hero has its own entrance — no wrapper needed */}
         <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
+        <FadeUp distance={28} duration={0.7}>
+          <About />
+        </FadeUp>
+        <FadeUp distance={28} duration={0.7} delay={0.04}>
+          <Projects />
+        </FadeUp>
+        <FadeUp distance={28} duration={0.7} delay={0.04}>
+          <Skills />
+        </FadeUp>
+        <FadeUp distance={28} duration={0.7} delay={0.04}>
+          <Testimonials />
+        </FadeUp>
+        <FadeUp distance={28} duration={0.7} delay={0.04}>
+          <Contact />
+        </FadeUp>
       </main>
       <Footer />
     </div>
   )
 }
+
 
 function App() {
   return (

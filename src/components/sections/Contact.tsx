@@ -5,18 +5,14 @@ import { MagneticWrapper } from '@/components/ui/MagneticWrapper'
 import { useCursorContext } from '@/components/cursor/CustomCursor'
 import { siteConfig } from '@/data/constants'
 
-// ─── Social link row ──────────────────────────────────────
-function SocialLink({
-  href,
-  label,
-  index,
-  inView,
-}: {
-  href:   string
-  label:  string
-  index:  number
-  inView: boolean
-}) {
+const socials = [
+  { key: 'github',   label: 'GitHub'   },
+  { key: 'instagram', label: 'Instagram' },
+  { key: 'twitter',  label: 'Twitter / X' },
+  { key: 'whatsapp',  label: 'Whatsapp' },
+]
+
+function SocialRow({ href, label, index, inView }: { href: string; label: string; index: number; inView: boolean }) {
   const { setVariant } = useCursorContext()
   const [hovered, setHovered] = useState(false)
 
@@ -25,41 +21,34 @@ function SocialLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -12 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: 0.5 + index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.5, delay: 0.5 + index * 0.08 }}
       onMouseEnter={() => { setHovered(true); setVariant('hover') }}
       onMouseLeave={() => { setHovered(false); setVariant('default') }}
-      className="group flex items-center justify-between py-4 border-b cursor-none"
-      style={{ borderColor: 'rgba(214,204,208,0.07)' }}
+      className="flex items-center justify-between py-5 cursor-none"
+      style={{ borderBottom: '1px solid var(--color-border)' }}
     >
       <span
-        className="font-sans text-sm tracking-wide transition-colors duration-200"
-        style={{ color: hovered ? '#D6CCD0' : 'rgba(214,204,208,0.45)' }}
+        className="transition-colors duration-200"
+        style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9375rem', fontWeight: 400, color: hovered ? 'var(--color-text-primary)' : 'var(--color-text-secondary)' }}
       >
         {label}
       </span>
-      <motion.svg
-        width="16" height="16" viewBox="0 0 16 16" fill="none"
+      <motion.span
         animate={{ x: hovered ? 3 : 0, y: hovered ? -3 : 0 }}
         transition={{ duration: 0.2 }}
+        style={{ color: hovered ? 'var(--color-accent)' : 'var(--color-text-secondary)', fontSize: '0.85rem' }}
       >
-        <path
-          d="M3 13L13 3M13 3H6M13 3v7"
-          stroke={hovered ? '#763948' : 'rgba(214,204,208,0.25)'}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </motion.svg>
+        ↗
+      </motion.span>
     </motion.a>
   )
 }
 
-// ─── Main component ───────────────────────────────────────
 export function Contact() {
-  const sectionRef  = useRef<HTMLDivElement>(null)
-  const inView      = useInView(sectionRef, { once: true, margin: '-10% 0px' })
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' })
   const { setVariant } = useCursorContext()
   const [copied, setCopied] = useState(false)
 
@@ -69,164 +58,101 @@ export function Contact() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const socials = [
-    { href: siteConfig.github,   label: 'GitHub'   },
-    { href: siteConfig.linkedin, label: 'LinkedIn' },
-    { href: siteConfig.twitter,  label: 'Twitter'  },
+  const socialLinks: { href: string; label: string }[] = [
+    { href: siteConfig.github,   label: 'GitHub'     },
+    { href: siteConfig.instagram, label: 'Instagram'   },
+    { href: siteConfig.twitter,  label: 'Twitter / X' },
+    { href: siteConfig.whatsapp,  label: 'Whatsapp' },
   ]
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="relative section-padding overflow-hidden"
-      style={{ backgroundColor: '#0D0A0B' }}
-    >
-      {/* Top divider */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ backgroundColor: 'rgba(214,204,208,0.06)' }}
-      />
+    <section id="contact" ref={sectionRef} className="section-padding section-bg" style={{ borderTop: '1px solid var(--color-border)' }}>
+      <div className="container-wide">
 
-      {/* Background large text watermark */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
-        aria-hidden="true"
-      >
-        <span
-          className="font-display italic whitespace-nowrap"
-          style={{
-            fontSize:   'clamp(8rem, 20vw, 18rem)',
-            fontWeight: 300,
-            color:      'rgba(118,57,72,0.04)',
-            lineHeight: 1,
-          }}
+        {/* Label */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mono-label mb-10"
         >
-          Let's talk
-        </span>
-      </div>
+          Contact
+        </motion.p>
 
-      <div className="container-wide relative z-10">
-
-        {/* ── Section label ─────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-3 mb-16"
-        >
-          <span className="w-8 h-px" style={{ backgroundColor: '#763948' }} />
-          <span
-            className="font-sans text-xs tracking-[0.2em] uppercase"
-            style={{ color: 'rgba(214,204,208,0.45)' }}
+        {/* Large heading */}
+        <div className="mb-20">
+          <RevealText
+            as="h2"
+            splitBy="words"
+            stagger={0.07}
+            distance={40}
+            style={{
+              fontFamily:    'var(--font-display)',
+              fontSize:      'clamp(2.6rem, 6vw, 5.5rem)',
+              fontWeight:    400,
+              color:         'var(--color-text-primary)',
+              letterSpacing: '-0.02em',
+              lineHeight:    1.0,
+            } as React.CSSProperties}
           >
-            Contact
-          </span>
-        </motion.div>
+            Got a project in mind?
+          </RevealText>
+        </div>
 
-        {/* ── Main grid ─────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-24 items-start">
 
-          {/* Left — heading + availability */}
+          {/* Left — email + availability */}
           <div className="flex flex-col gap-10">
-            <RevealText
-              as="h2"
-              splitBy="words"
-              delay={0.1}
-              stagger={0.08}
-              distance={55}
-              className="leading-[1.0]"
-              style={{
-                fontFamily: '"Cormorant Garamond", Georgia, serif',
-                fontSize:   'clamp(2.8rem, 6vw, 5rem)',
-                fontWeight: 300,
-                color:      '#D6CCD0',
-              } as React.CSSProperties}
-            >
-              Got a project in mind?
-            </RevealText>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="font-sans text-base leading-relaxed"
-              style={{ color: 'rgba(214,204,208,0.55)', maxWidth: '38ch' }}
-            >
-              I'm currently available for freelance work and open to
-              interesting collaborations. Whether it's a full product build,
-              a landing page, or just a conversation — reach out.
-            </motion.p>
-
-            {/* Availability badge */}
+            {/* Availability */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-3 px-5 py-3 rounded-full self-start"
-              style={{
-                backgroundColor: 'rgba(118,57,72,0.1)',
-                border:          '1px solid rgba(118,57,72,0.25)',
-              }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="inline-flex items-center gap-2.5 self-start"
             >
-              <span
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ backgroundColor: '#a3e635' }}
-              />
-              <span
-                className="font-sans text-sm tracking-wide"
-                style={{ color: 'rgba(214,204,208,0.7)' }}
-              >
-                Available for work
-              </span>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#6EBF8B' }} />
+              <span className="mono-label" style={{ color: 'var(--color-text-secondary)' }}>Available for work</span>
             </motion.div>
 
-            {/* Email CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-3"
+              transition={{ duration: 0.6, delay: 0.35 }}
+              style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, fontWeight: 300, maxWidth: '40ch' }}
             >
-              <span
-                className="font-sans text-xs tracking-[0.15em] uppercase"
-                style={{ color: 'rgba(214,204,208,0.3)' }}
-              >
-                Or drop a mail
-              </span>
+              I'm open to freelance work and interesting collaborations — whether it's a full product build, a landing page, or just a conversation.
+            </motion.p>
 
-              <MagneticWrapper strength={0.2}>
+            {/* Email display */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.45 }}
+              className="flex flex-col gap-2"
+            >
+              <p className="mono-label mb-2">Email</p>
+              <MagneticWrapper strength={0.15}>
                 <button
                   onClick={copyEmail}
                   onMouseEnter={() => setVariant('hover')}
                   onMouseLeave={() => setVariant('default')}
-                  className="group flex items-center gap-4 cursor-none"
+                  className="cursor-none group flex items-baseline gap-4"
                 >
                   <span
-                    className="font-display transition-colors duration-300"
-                    style={{
-                      fontSize:   'clamp(1.1rem, 2.5vw, 1.6rem)',
-                      fontWeight: 300,
-                      color:      '#D6CCD0',
-                    }}
+                    className="group-hover:text-[var(--color-accent)] transition-colors duration-200"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.1rem, 2.2vw, 1.5rem)', fontWeight: 400, color: 'var(--color-text-primary)' }}
                   >
                     {siteConfig.email}
                   </span>
-                  {/* Copy icon / confirmation */}
                   <motion.span
-                    key={copied ? 'check' : 'copy'}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="font-sans text-xs tracking-wide px-2.5 py-1 rounded-full"
-                    style={{
-                      backgroundColor: copied
-                        ? 'rgba(163,230,53,0.15)'
-                        : 'rgba(118,57,72,0.15)',
-                      color: copied
-                        ? '#a3e635'
-                        : 'rgba(214,204,208,0.45)',
-                      border: `1px solid ${copied ? 'rgba(163,230,53,0.3)' : 'rgba(118,57,72,0.25)'}`,
-                    }}
+                    key={copied ? 'copied' : 'copy'}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="mono-label"
+                    style={{ color: copied ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
                   >
                     {copied ? 'Copied!' : 'Copy'}
                   </motion.span>
@@ -235,70 +161,55 @@ export function Contact() {
             </motion.div>
           </div>
 
-          {/* Right — social links + form nudge */}
+          {/* Right — socials + CTA */}
           <div className="flex flex-col gap-10">
 
-            {/* Social links */}
+            {/* Socials */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <span
-                className="font-sans text-xs tracking-[0.15em] uppercase block mb-2"
-                style={{ color: 'rgba(214,204,208,0.3)' }}
-              >
-                Find me on
-              </span>
-              {socials.map((social, i) => (
-                <SocialLink
-                  key={social.label}
-                  {...social}
-                  index={i}
-                  inView={inView}
-                />
+              <p className="mono-label mb-2">Find me on</p>
+              {/* Opening rule */}
+              <div className="hr" />
+              {socialLinks.map((s, i) => (
+                <SocialRow key={s.label} href={s.href} label={s.label} index={i} inView={inView} />
               ))}
             </motion.div>
 
-            {/* Big CTA button */}
+            {/* CTA button */}
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: 0.7 }}
             >
-              <MagneticWrapper strength={0.3}>
+              <MagneticWrapper strength={0.25}>
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={siteConfig.whatsapp}
                   onMouseEnter={() => setVariant('hover')}
                   onMouseLeave={() => setVariant('default')}
-                  className="group relative flex items-center justify-center gap-3 w-full py-5 rounded-2xl font-sans text-sm font-medium tracking-widest uppercase overflow-hidden cursor-none transition-all duration-500"
+                  className="group cursor-none flex items-center justify-center gap-3 w-full py-5 transition-colors duration-300"
                   style={{
-                    border:          '1px solid rgba(118,57,72,0.4)',
-                    color:           '#D6CCD0',
-                    backgroundColor: 'rgba(118,57,72,0.05)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '2px',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '0.8125rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'var(--color-text-secondary)',
+                  }}
+                  onMouseOver={e => {
+                    ;(e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-accent)'
+                    ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-text-primary)'
+                  }}
+                  onMouseOut={e => {
+                    ;(e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--color-border)'
+                    ;(e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-text-secondary)'
                   }}
                 >
-                  {/* Hover fill */}
-                  <span
-                    className="absolute inset-0 scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-500 rounded-2xl"
-                    style={{ backgroundColor: '#763948' }}
-                    aria-hidden="true"
-                  />
-                  <span className="relative z-10 flex items-center gap-3">
-                    Send me a message
-                    <svg
-                      width="16" height="16" viewBox="0 0 16 16" fill="none"
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    >
-                      <path
-                        d="M3 8h10M9 4l4 4-4 4"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
+                  Send me a message →
                 </a>
               </MagneticWrapper>
             </motion.div>

@@ -1,27 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..900;1,9..40,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
-  --color-blush:     #D6CCD0;
-  --color-wine:      #763948;
-  --color-blush-50:  #F5F2F3;
-  --color-blush-100: #EDE7EA;
-  --color-blush-300: #BFB0B6;
-  --color-wine-100:  #E0BEC7;
-  --color-wine-300:  #A85E78;
-  --color-wine-600:  #5E2D3A;
-  --color-wine-700:  #46212B;
+  /* ── Palette ─────────────────────────────────────── */
+  --color-bg:             #0C0C0C;
+  --color-surface:        #141414;
+  --color-text-primary:   #F0EDE6;
+  --color-text-secondary: #6E6B63;
+  --color-accent:         #C4A882;
+  --color-border:         rgba(240, 237, 230, 0.08);
 
-  /* Fonts */
-  --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans:    "DM Sans", system-ui, sans-serif;
+  /* ── Typography ──────────────────────────────────── */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans:    "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "Courier New", monospace;
 
-  /* Easing */
-  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* ── Easing ──────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── Reset ───────────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -30,59 +29,84 @@ body {
   cursor: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
 }
 
 @media (hover: none), (max-width: 1024px) {
   body { cursor: auto; }
 }
 
-/* Selection style */
+/* ── Selection ───────────────────────────────────────── */
 ::selection {
-  background-color: rgba(118, 57, 72, 0.35);
-  color: #D6CCD0;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0D0A0B; }
-::-webkit-scrollbar-thumb { background: #763948; border-radius: 2px; }
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-text-secondary); border-radius: 2px; }
 
-/* ── Layout utilities (mobile-first) ───────────────────────────── */
+/* ── Layout ──────────────────────────────────────────── */
 @layer utilities {
-  /* Shared centered container with consistent responsive gutters. */
   .container-wide {
-    max-width: 80rem; /* ~1280px */
+    max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
-    padding-left:  1rem; /* 16px */
-    padding-right: 1rem; /* 16px */
+    padding-left:  1.25rem;
+    padding-right: 1.25rem;
   }
 
-  /* Standard vertical spacing for each major section. */
   .section-padding {
-    padding-top:  5.5rem;  /* 88px */
-    padding-bottom: 5.5rem; /* 88px */
+    padding-top:    5rem;
+    padding-bottom: 5rem;
   }
 
   @media (min-width: 768px) {
     .container-wide {
-      padding-left:  2rem; /* 32px */
-      padding-right: 2rem; /* 32px */
+      padding-left:  3rem;
+      padding-right: 3rem;
     }
     .section-padding {
-      padding-top:  6.75rem;   /* 108px */
-      padding-bottom: 6.75rem; /* 108px */
+      padding-top:    9rem;
+      padding-bottom: 9rem;
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     .container-wide {
-      padding-left:  3rem; /* 48px */
-      padding-right: 3rem; /* 48px */
+      padding-left:  4rem;
+      padding-right: 4rem;
     }
     .section-padding {
-      padding-top:  7.5rem;   /* 120px */
-      padding-bottom: 7.5rem; /* 120px */
+      padding-top:    10rem;
+      padding-bottom: 10rem;
     }
+  }
+
+  /* ── Mono label ────────────────────────────────────── */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;   /* 11px */
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  /* ── Hairline rule ─────────────────────────────────── */
+  .hr {
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  /* ── Subtle dot-grid background for sections ───────── */
+  .section-bg {
+    background-image: radial-gradient(
+      circle,
+      rgba(240, 237, 230, 0.045) 1px,
+      transparent 1px
+    );
+    background-size: 28px 28px;
   }
 }
