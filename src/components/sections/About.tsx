@@ -24,12 +24,18 @@ const services = [
     title: 'E-commerce & Integrations',
     body: 'Online stores, payment integrations, booking systems, and third-party API connections. Your business logic, built exactly how you need it.',
     icon: '◎',
-  },
+  }, 
+{
+  number: '04',
+  title: 'SEO & Brand Identity',
+  body: 'From search rankings to first impressions — I build sites that Google finds and clients remember. Clean semantic structure, fast load times, and a visual identity that makes your business look the part.',
+  icon: '◍',
+},
 ]
 
 const proofPoints = [
   { index: '01', value: 'Fast Delivery',        detail: 'Most projects delivered in 1–3 weeks. No waiting months for something that should take days.',                        tag: 'Timeline'   },
-  { index: '02', value: 'Full-Stack, Solo',      detail: 'Design, frontend, and backend — all handled by one person. No miscommunication, no handoffs, no excuses.',           tag: 'Capability' },
+  { index: '02', value: 'Full-Stack',      detail: 'Design, frontend, and backend — all handled by one person. No miscommunication, no handoffs, no excuses.',           tag: 'Capability' },
   { index: '03', value: 'Honest Pricing',        detail: 'Premium-quality work at rates that make sense for growing businesses and early-stage founders.',                      tag: 'Value'      },
   { index: '04', value: 'Always Communicative',  detail: "You stay in the loop at every stage — updates, questions, revisions. You're never left guessing.",                   tag: 'Process'    },
 ]
