@@ -12,11 +12,11 @@ import type { Project } from '@/types'
 
 export const projects: Project[] = [
   {
-    id:          'safeswap',
-    title:       'SafeSwap',
+    id:          'Bemo',
+    title:       'Bemo---Invoice-Payment-Management-System',
     description:
-      'A mobile-first escrow platform eliminating fraud in Nigerian informal online marketplaces. Buyers and sellers on Instagram and WhatsApp transact through a secure hold-and-release flow — money only moves when both parties confirm.',
-    tags:        ['React Native', 'Django', 'Django REST Framework', 'Escrow', 'FinTech'],
+      'A full-stack web application that lets freelancers and small business owners create professional invoices, send them to clients as shareable links, collect payments via Paystack, and track all revenue from a clean dashboard. Replaces WhatsApp screenshots and Excel chaos..',
+    tags:        ['React Js', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
     repo:        'https://github.com',   // ← update with real URL
     image:       '',                     // ← e.g. '/images/projects/safeswap.png'
     featured:    true,
