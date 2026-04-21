@@ -17,10 +17,10 @@ export const projects: Project[] = [
     description:
       'A full-stack web application that lets freelancers and small business owners create professional invoices, send them to clients as shareable links, collect payments via Paystack, and track all revenue from a clean dashboard. Replaces WhatsApp screenshots and Excel chaos..',
     tags:        ['React Js', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
-    repo:        'https://github.com',   // ← update with real URL
-    image:       '',                     // ← e.g. '/images/projects/safeswap.png'
+    repo:        'https://github.com/The-Psalm/Bemo---Invoice-Payment-Management-System.git',   // ← update with real URL
+    image:       './src/assets/images/bemo.png',                     // ← e.g. '/images/projects/safeswap.png'
     featured:    true,
-    year:        2025,
+    year:        2026,
   },
   {
     id:          'portfolio',
