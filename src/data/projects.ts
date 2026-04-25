@@ -12,51 +12,52 @@ import type { Project } from '@/types'
 
 export const projects: Project[] = [
   {
-    id:          'Bemo',
-    title:       'Bemo---Invoice-Payment-Management-System',
+    id: 'Bemo',
+    title: 'Bemo---Invoice-Payment-Management-System',
     description:
       'A full-stack web application that lets freelancers and small business owners create professional invoices, send them to clients as shareable links, collect payments via Paystack, and track all revenue from a clean dashboard. Replaces WhatsApp screenshots and Excel chaos..',
-    tags:        ['React Js', 'Typescript', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
-    repo:        'https://github.com/The-Psalm/Bemo---Invoice-Payment-Management-System.git',   // ← update with real URL
-    url:         'https://bemo-invoice.vercel.app', // placeholder for live preview
-    image:       'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1777097932/Screenshot_2026-04-25_071728_xw3krn.png',                     // ← e.g. '/images/projects/safeswap.png'
-    featured:    true,
-    year:        2026,
+    tags: ['React Js', 'Typescript', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
+    repo: 'https://github.com/The-Psalm/Bemo---Invoice-Payment-Management-System.git',   // ← update with real URL
+    url: 'https://bemo-invoice.vercel.app', // placeholder for live preview
+    image: 'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1777097932/Screenshot_2026-04-25_071728_xw3krn.png',                     // ← e.g. '/images/projects/safeswap.png'
+    featured: true,
+    year: 2026,
   },
   {
-    id:          'portfolio',
-    title:       'Developer Portfolio',
+    id: 'Vesper Restaurant landing page',
+    title: 'Vesper Restaurant landing page',
     description:
-      'This site. Built with React 19, TypeScript, Tailwind v4, Three.js, and Framer Motion. Features a custom magnetic cursor, Lenis smooth scroll, and a WebGL particle scene.',
-    tags:        ['React', 'TypeScript', 'Three.js', 'Framer Motion', 'GSAP'],
-    repo:        'https://github.com',   // ← update with real URL
-    url:         '#', // placeholder for live preview
-    image:       './src/assets/images/graphic-design-website-templates-featured-image-1000x750.avif',                     // ← e.g. '/images/projects/portfolio.png'
-    featured:    true,
-    year:        2025,
+      'A high-end restaurant landing page built with React, TypeScript, and GSAP. Features smooth animations, cinematic visuals, and a modern, elegant design aesthetic.',
+    tags: ['React', 'TypeScript', 'GSAP', 'Tailwind'],
+    repo: 'https://github.com/The-Psalm/Vesper-Restaurant-landing-page.git',   // ← update with real URL
+    url: 'https://vesper-restaurant.vercel.app/', // placeholder for live preview
+    image: 'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1777122211/Screenshot_2026-04-25_140230_ixidms.png',
+
+    featured: true,
+    year: 2026,
   },
   {
-    id:          'freelance-connector',
-    title:       'Freelance Connector',
+    id: 'freelance-connector',
+    title: 'Freelance Connector',
     description:
       'Platform connecting freelancers with local Nigerian businesses through smart search and social media discovery. First real-world product attempt.',
-    tags:        ['React', 'Django', 'Python', 'REST API'],
-    repo:        'https://github.com',
-    url:         '#', // placeholder for live preview
-    image:       'https://graphicmama.com/blog/website-design-ideas/',
-    featured:    false,
-    year:        2024,
+    tags: ['React', 'Django', 'Python', 'REST API'],
+    repo: 'https://github.com',
+    url: '#', // placeholder for live preview
+    image: 'https://graphicmama.com/blog/website-design-ideas/',
+    featured: false,
+    year: 2024,
   },
   {
-    id:          'business-sites',
-    title:       'Local Business Websites',
+    id: 'business-sites',
+    title: 'Local Business Websites',
     description:
       'A collection of websites for small Nigerian businesses — restaurants, retail, and service providers. Custom-built, responsive, and SEO-optimised.',
-    tags:        ['HTML', 'CSS', 'JavaScript', 'Freelance'],
-    url:         '#', // placeholder for live preview
-    image:       '',
-    featured:    false,
-    year:        2023,
+    tags: ['HTML', 'CSS', 'JavaScript', 'Freelance'],
+    url: '#', // placeholder for live preview
+    image: '',
+    featured: false,
+    year: 2023,
   },
 ]
 
