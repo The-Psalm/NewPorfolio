@@ -42,7 +42,7 @@ const proofPoints = [
 
 const stats = [
   { value: '3+',  label: 'Years building' },
-  { value: '30+', label: 'Projects shipped' },
+  { value: '20+', label: 'Projects shipped' },
   { value: '100%', label: 'Client satisfaction' },
 ]
 
