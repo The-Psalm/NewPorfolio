@@ -13,7 +13,7 @@ export const siteConfig = {
   title:    'Full-Stack Developer',
   email:    'adebusuyisamuel3@gmail.com',
   github:   'https://github.com/The-Psalm',
-  instagram: 'https://www.instagram.com/psalm.web.dev?igsh=MTg5YWhhYzEyamh0NA==',
+  instagram: 'https://www.instagram.com/psalm.webdev?igsh=MTg5YWhhYzEyamh0NA==',
   twitter:  'https://twitter.com',
   whatsapp: 'https://wa.me/+2347026218523',
   // Drop your portrait here — e.g. '/portrait.jpg' (place file in /public)

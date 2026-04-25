@@ -16,7 +16,7 @@ export const projects: Project[] = [
     title:       'Bemo---Invoice-Payment-Management-System',
     description:
       'A full-stack web application that lets freelancers and small business owners create professional invoices, send them to clients as shareable links, collect payments via Paystack, and track all revenue from a clean dashboard. Replaces WhatsApp screenshots and Excel chaos..',
-    tags:        ['React Js', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
+    tags:        ['React Js', 'Typescript', 'Django', 'Django REST Framework', 'PostgreSQL', 'Paystack'],
     repo:        'https://github.com/The-Psalm/Bemo---Invoice-Payment-Management-System.git',   // ← update with real URL
     url:         'https://bemo-invoice.vercel.app', // placeholder for live preview
     image:       'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1777097932/Screenshot_2026-04-25_071728_xw3krn.png',                     // ← e.g. '/images/projects/safeswap.png'
