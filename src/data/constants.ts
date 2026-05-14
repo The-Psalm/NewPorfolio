@@ -17,6 +17,6 @@ export const siteConfig = {
   twitter:  'https://twitter.com',
   whatsapp: 'https://wa.me/+2347026218523',
   // Drop your portrait here — e.g. '/portrait.jpg' (place file in /public)
-  portrait: '' as string,
+  portrait: 'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1778783870/Screenshot_20251221-213155_2_twbbgv.jpg' as string,
 }
 

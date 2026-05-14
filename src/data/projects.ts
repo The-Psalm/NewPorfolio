@@ -11,6 +11,18 @@ import type { Project } from '@/types'
  */
 
 export const projects: Project[] = [
+    {
+    id: 'Skin care brand',
+    title: 'Skin Care Brand Landingpage ',
+    description:
+      'A complee landing page for a Skin care brand to gain more customers',
+    tags: ['React Js', 'Typescript', 'Tailwind'],
+    repo: 'https://github.com/The-Psalm/SkinCare-Vendor-landing-page.git',   // ← update with real URL
+    url: 'https://skin-care-demo.vercel.app/', // placeholder for live preview
+    image: 'https://res.cloudinary.com/dpgi1ujrb/image/upload/v1778783809/Screenshot_2026-05-14_193550_a1a3sb.png',                     // ← e.g. '/images/projects/safeswap.png'
+    featured: true,
+    year: 2026,
+  },
   {
     id: 'Bemo',
     title: 'Bemo---Invoice-Payment-Management-System',
